@@ -33,23 +33,23 @@ function addGamesToPage(games) {
     // loop over each item in the data
     for (let game of games) {
         // create a new div element, which will become the game card
-        let div = document.createElement("div");
+        let game_el = document.createElement("div");
         
         // add the class game-card to the list
-        div.classList.add("game-card");
+        game_el.classList.add("game-card");
         
         // set the inner HTML using a template literal to display some info 
         // about each game
         // TIP: if your images are not displaying, make sure there is space
         // between the end of the src attribute and the end of the tag ("/>")
-        div.innerHTML = `<div>
+        game_el.innerHTML = `<div>
                 <img class="game-img" src=${game.img} />
                 <h3>${game.name}</h3>
                 <p>${game.description}</p>
             </div>`;
             
         // append the game to the games-container
-        gamesContainer.appendChild(div);
+        gamesContainer.appendChild(game_el);
     }
 }
 
@@ -160,7 +160,9 @@ const num_unfunded = GAMES_JSON.reduce((a, b) => b.pledged < b.goal ? a+1 : a, 0
 const display_str = `A total of $${total_raised.toLocaleString('en-US')} has been raised for ${total_card} games. Currently, ${num_unfunded} ${num_unfunded > 1 ? "games remain" : "game remain"} unfunded. Wee need your help to fund these amazing games!`
 
 // create a new DOM element containing the template string and append it to the description container
-descriptionContainer.innerHTML = display_str;
+const display_el = document.createElement("p");
+display_el.innerHTML = display_str
+descriptionContainer.appendChild(display_el);
 
 
 
@@ -181,10 +183,11 @@ const [top1, top2, ...others] = sortedGames;
 // console.log(top1, top2, others);
 
 // create a new element to hold the name of the top pledge game, then append it to the correct element
-const top1_name = top1.name;
-firstGameContainer.innerHTML = top1_name;
-
-const top2_name = top2.name;
-secondGameContainer.innerHTML = top2_name;
+const top1_el = document.createElement("p");
+top1_el.innerHTML = top1.name;
+firstGameContainer.appendChild(top1_el);
 
 // do the same for the runner up item
+const top2_el = document.createElement("p");
+top2_el.innerHTML = top2.name
+secondGameContainer.append(top2_el);
